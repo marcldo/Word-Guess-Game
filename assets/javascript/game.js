@@ -7,36 +7,59 @@ var guess = document.getElementById("guess");
 
 var wordToGuess = wordList[getRandomInt(3)];
 
-var strike = null;
-
 var guesses = [];
+
+var guessRem = 10;
+
+var gameLive = true;
+
+var startText = document.getElementById("gameStatus");
+
+startText.textContent = "Press Any Key To Start";
 
 console.log(wordToGuess);
 
+document.onkeyup = function (event) {
+    gameRunning();
+    gameLive = true;
+};
+
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
-}
+};
 
-document.onkeyup = function (event) {
 
-    // Determines which key was pressed.
-    var userInput = event.key;
 
-    if (wordToGuess.includes(userInput)) {
-        //call correctGuess() to update screen
-        console.log("yes");
-        //display(userInput);
-        correctGuess(userInput);
-        updateGuessed(userInput);
-    }
 
-    else {
-        //call wrongGuess() to update guesses remaining
-        wrongGuess(userInput);
-        updateGuessed(userInput);
-        console.log("no");
-    }
+function gameRunning() {
+    startText.textContent = "";
+    document.onkeyup = function (event) {
 
+
+        var userInput = event.key;
+
+        if (gameLive === true) {
+
+            if (wordToGuess.includes(userInput)) {
+                //call correctGuess() to update screen
+                console.log("yes");
+                //display(userInput);
+                correctGuess(userInput);
+                updateGuessed(userInput);
+            }
+
+            else {
+                //call wrongGuess() to update guesses remaining
+                wrongGuess(userInput);
+                updateGuessed(userInput);
+                console.log("no");
+            }
+
+        }
+
+
+    };
 };
 
 
@@ -65,17 +88,22 @@ function correctGuess(letter) {
         newLetter.textContent = letter;
     });
 
+    //record win 
+
 
 };
 
 //wrong guess function
 function wrongGuess(letter) {
-    strike++;
-    var strikeElement = document.getElementById("strike");
-    strikeElement.textContent = strike;
+    guessRem--;
+    var guessRemElement = document.getElementById("guessRemElm");
+    guessRemElement.textContent = guessRem;
+    if (guessRem === 0) {
+        gameLive = false;
+    }
 };
 
-
+//if the guessed letter is not in the guesses array update the array
 function updateGuessed(letter) {
     if (guesses.includes(letter)) {
         alert("You already guessed that, try again");

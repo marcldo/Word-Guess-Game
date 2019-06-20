@@ -7,6 +7,10 @@ var guess = document.getElementById("guess");
 
 var wordToGuess = wordList[getRandomInt(3)];
 
+var strike = null;
+
+var guesses = [];
+
 console.log(wordToGuess);
 
 function getRandomInt(max) {
@@ -22,11 +26,12 @@ document.onkeyup = function (event) {
         //call correctGuess() to update screen
         console.log("yes");
         //display(userInput);
-        updateCorrectGuess(userInput);
+        correctGuess(userInput);
     }
 
     else {
         //call wrongGuess() to update guesses remaining
+        wrongGuess(userInput);
         console.log("no");
     }
 
@@ -45,7 +50,7 @@ for (let i = 0; i < wordToGuess.length; i++) {
 };
 
 //correct guess function
-function updateCorrectGuess(letter) {
+function correctGuess(letter) {
 
     // find all occurrences of the letter
     var indices = [];
@@ -65,6 +70,26 @@ function updateCorrectGuess(letter) {
 };
 
 //wrong guess function
+function wrongGuess(letter) {
+    if (guesses.includes(letter)) {
+        alert("You already guessed that, try again");
+    }
+    else {
+
+        strike++;
+        guesses.push(letter);
+
+        var strikeElement = document.getElementById("strike");
+        strikeElement.textContent = strike;
+
+        var guessedElement = document.getElementById("guessed");
+        guessedElement.textContent = guesses;
+    }
+
+
+
+
+};
 
 
 

@@ -27,19 +27,18 @@ document.onkeyup = function (event) {
         console.log("yes");
         //display(userInput);
         correctGuess(userInput);
+        updateGuessed(userInput);
     }
 
     else {
         //call wrongGuess() to update guesses remaining
         wrongGuess(userInput);
+        updateGuessed(userInput);
         console.log("no");
     }
 
 };
 
-function display(input) {
-    console.log(input)
-};
 
 //create hidden *** to display
 for (let i = 0; i < wordToGuess.length; i++) {
@@ -71,24 +70,21 @@ function correctGuess(letter) {
 
 //wrong guess function
 function wrongGuess(letter) {
+    strike++;
+    var strikeElement = document.getElementById("strike");
+    strikeElement.textContent = strike;
+};
+
+
+function updateGuessed(letter) {
     if (guesses.includes(letter)) {
         alert("You already guessed that, try again");
     }
     else {
-
-        strike++;
         guesses.push(letter);
-
-        var strikeElement = document.getElementById("strike");
-        strikeElement.textContent = strike;
-
         var guessedElement = document.getElementById("guessed");
         guessedElement.textContent = guesses;
     }
-
-
-
-
 };
 
 

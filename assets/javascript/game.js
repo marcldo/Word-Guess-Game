@@ -9,11 +9,17 @@ var wordToGuess = wordList[getRandomInt(3)];
 
 var guesses = [];
 
+var currentGuess = [];
+
 var guessRem = 10;
+
+var wins = 0;
 
 var gameLive = true;
 
 var startText = document.getElementById("gameStatus");
+
+var winsElm = document.getElementById("winsElm");
 
 startText.textContent = "Press Any Key To Start";
 
@@ -33,7 +39,7 @@ function getRandomInt(max) {
 
 
 function gameRunning() {
-    startText.textContent = "";
+    startText.textContent = "Who is this?";
     document.onkeyup = function (event) {
 
 
@@ -71,12 +77,13 @@ for (let i = 0; i < wordToGuess.length; i++) {
     word.appendChild(newStar);
 };
 
+
 //correct guess function
 function correctGuess(letter) {
-
-    // find all occurrences of the letter
     var indices = [];
     var idx = wordToGuess.indexOf(letter);
+
+    // find all occurrences of the letter
     while (idx != -1) {
         indices.push(idx);
         idx = wordToGuess.indexOf(letter, idx + 1);
@@ -86,11 +93,21 @@ function correctGuess(letter) {
     indices.forEach(function (letterPosition) {
         var newLetter = document.getElementById("span" + letterPosition);
         newLetter.textContent = letter;
+        currentGuess.splice(letterPosition, 0, letter);
     });
 
+    console.log(currentGuess);
+    var currGuessStr = currentGuess.join("");
+
     //record win 
-
-
+    if (currGuessStr === wordToGuess) {
+        wins++;
+        winsElm.textContent = wins;
+        getNewWord();
+    }
+    console.log(currGuessStr);
+    console.log(wins);
+    console.log(wordToGuess);
 };
 
 //wrong guess function
@@ -100,6 +117,7 @@ function wrongGuess(letter) {
     guessRemElement.textContent = guessRem;
     if (guessRem === 0) {
         gameLive = false;
+        startText.textContent = "You Lose";
     }
 };
 
@@ -115,15 +133,7 @@ function updateGuessed(letter) {
     }
 };
 
+function getNewWord() {
+    wordToGuess = wordList[getRandomInt(3)];
 
-
-// document.onkeyup = function (event) {
-//     var newGuess = document.createElement("span");
-//     newGuess.textContent = event.key;
-//     guess.appendChild(newGuess);
-// };
-
-// var newGuess = document.createElement("span");
-// newGuess.textContent = userInput.onkey;
-// guess.appendChild(newGuess);
-
+};

@@ -1,11 +1,11 @@
 
-var wordList = ["apple", "ball", "cat"];
+var wordList = ["leonard", "lowry", "siakam"];
 
 var word = document.getElementById("word");
 
 var guess = document.getElementById("guess");
 
-var wordToGuess = wordList[getRandomInt(3)];
+var wordToGuess = [];
 
 var guesses = [];
 
@@ -25,17 +25,62 @@ startText.textContent = "Press Any Key To Start";
 
 console.log(wordToGuess);
 
-document.onkeyup = function (event) {
-    gameRunning();
-    gameLive = true;
+gameStart();
+
+function gameStart() {
+    startText.textContent = "Press Any Key To Start";
+    document.onkeyup = function (event) {
+        gameLive = true;
+        getNewWord();
+        gameRunning();
+    };
 };
+
+function gameRestart() {
+    wordToGuess = [];
+
+    guesses = [];
+
+    currentGuess = [];
+
+    guessRem = 10;
+
+    wins = 0;
+
+    gameLive = true;
+
+    currGuessStr = "";
+
+    gameStart();
+};
+
+function getNewWord() {
+    wordToGuess = [];
+    wordToGuess = wordList[getRandomInt(3)];
+    guesses = [];
+    guessRem = 10;
+
+    for (let i = 0; i < wordToGuess.length; i++) {
+        var newStar = document.createElement("span");
+        newStar.id = "span" + i;
+        newStar.textContent = "*";
+        word.appendChild(newStar);
+    };
+};
+
+
+function deleteSpan() {
+    for (let i = 0; i < wordToGuess.length; i++) {
+        var span = document.getElementById("span" + i);
+        span.parentNode.removeChild(span);
+    };
+};
+
 
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 };
-
-
 
 
 function gameRunning() {
@@ -51,14 +96,14 @@ function gameRunning() {
                 //call correctGuess() to update screen
                 console.log("yes");
                 //display(userInput);
-                correctGuess(userInput);
                 updateGuessed(userInput);
+                correctGuess(userInput);
             }
 
             else {
                 //call wrongGuess() to update guesses remaining
-                wrongGuess(userInput);
                 updateGuessed(userInput);
+                wrongGuess(userInput);
                 console.log("no");
             }
 
@@ -68,14 +113,6 @@ function gameRunning() {
     };
 };
 
-
-//create hidden *** to display
-for (let i = 0; i < wordToGuess.length; i++) {
-    var newStar = document.createElement("span");
-    newStar.id = "span" + i;
-    newStar.textContent = "*";
-    word.appendChild(newStar);
-};
 
 
 //correct guess function
@@ -102,12 +139,18 @@ function correctGuess(letter) {
     //record win 
     if (currGuessStr === wordToGuess) {
         wins++;
+        if (wins === 3) {
+            win();
+        }
         winsElm.textContent = wins;
+        currGuessStr = "";
+        currentGuess = [];
+        deleteGuesses();
+        deleteSpan();
         getNewWord();
+        gameRunning();
+        console.log(guesses);
     }
-    console.log(currGuessStr);
-    console.log(wins);
-    console.log(wordToGuess);
 };
 
 //wrong guess function
@@ -116,8 +159,18 @@ function wrongGuess(letter) {
     var guessRemElement = document.getElementById("guessRemElm");
     guessRemElement.textContent = guessRem;
     if (guessRem === 0) {
+        deleteGuesses();
         gameLive = false;
-        startText.textContent = "You Lose";
+        var playAgain = confirm("Game Over! Try again?");
+        if (playAgain == true) {
+            deleteSpan();
+            guessRem = 10;
+            gameRestart();
+            wordToGuess = [];
+        }
+        else {
+            startText.textContent = "You Lose";
+        }
     }
 };
 
@@ -133,7 +186,16 @@ function updateGuessed(letter) {
     }
 };
 
-function getNewWord() {
-    wordToGuess = wordList[getRandomInt(3)];
+function win() {
+    deleteSpan();
+    guessRem = 10;
+    gameRestart();
+    alert("you the champ");
+    wordToGuess = [];
+}
 
+
+function deleteGuesses() {
+    var guessedElement = document.getElementById("guessed");
+    guessedElement.textContent = "";
 };

@@ -85,6 +85,7 @@ function getRandomInt(max) {
 //Main function takes userInput and checks wordToGuessArray
 function gameRunning() {
     startText.textContent = "Who is this?";
+    updateImage(wordToGuess);
     document.onkeyup = function (event) {
 
 
@@ -101,7 +102,6 @@ function gameRunning() {
                 console.log("yes");
                 //display(userInput) on guessed letters element;
                 updateGuessed(userInput);
-
                 correctGuess(userInput);
 
 
@@ -164,6 +164,7 @@ function correctGuess(letter) {
         deleteGuesses();
         deleteSpan();
         getNewWord();
+        updateImage(wordToGuess);
         gameRunning();
         console.log(guesses);
     }
@@ -219,3 +220,24 @@ function deleteGuesses() {
     var guessedElement = document.getElementById("guessed");
     guessedElement.textContent = "";
 };
+
+function updateImage(word) {
+    var mainImg = document.getElementById("mainImg");
+    console.log(word);
+    if (word === "leonard") {
+        mainImg.src = "assets/images/leonard.gif";
+    }
+    else if (word === "lowry") {
+        mainImg.src = "assets/images/lowry.gif";
+    }
+    else if (word === "siakam") {
+        mainImg.src = "assets/images/siakam.gif";
+    }
+    else if (word === "gasol") {
+        mainImg.src = "assets/images/gasol.gif";
+    }
+    else if (word === "green") {
+        mainImg.src = "assets/images/green.gif";
+    }
+
+}

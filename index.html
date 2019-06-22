@@ -5,28 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Word Guess Game</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/javascript/game.js" defer></script>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <h4 id="gameStatus"></h4>
-    <h1 id="word"></h1>
-    <table>
-        <tr>
-            <th>Guesses Left</th>
-            <td id="guessRemElm">10</td>
-        </tr>
-        <tr>
-            <th>Letters Guessed</th>
-            <td id="guessed"></td>
-        </tr>
-        <tr>
-            <th>Wins</th>
-            <td id="winsElm">0</td>
-        </tr>
-    </table>
+    <div class="container">
+
+        <div class="banner gradientFade">
+            <img src="assets/images/banner.png" alt="" class="bannerImg">
+        </div>
+
+
+        <div class="content">
+            <div class="img">
+                <img src="assets/images/headline.gif" alt="" id="mainImg">
+
+            </div>
+
+            <div class="subHeading whiteTxt">
+                <h4 id="gameStatus"></h4>
+
+            </div>
+
+            <div class="currentguess whiteTxt">
+                <h1 id="word"></h1>
+
+            </div>
+
+
+        </div>
+
+        <div class="scoreBoard">
+            <table>
+                <tr>
+                    <th>Guesses Left</th>
+                    <td id="guessRemElm">10</td>
+                </tr>
+                <tr>
+                    <th>Letters Guessed</th>
+                    <td id="guessed"></td>
+                </tr>
+                <tr>
+                    <th>Wins</th>
+                    <td id="winsElm">0</td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+
 
 </body>
 

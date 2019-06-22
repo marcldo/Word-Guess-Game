@@ -1,5 +1,5 @@
 
-var wordList = ["leonard", "lowry", "siakam"];
+var wordList = ["leonard", "lowry", "siakam", "gasol", "green"];
 
 var word = document.getElementById("word");
 
@@ -56,7 +56,7 @@ function gameRestart() {
 
 function getNewWord() {
     wordToGuess = [];
-    wordToGuess = wordList[getRandomInt(3)];
+    wordToGuess = wordList[getRandomInt(5)];
     guesses = [];
     guessRem = 10;
 
@@ -82,7 +82,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 };
 
-
+//Main function takes userInput and checks wordToGuessArray
 function gameRunning() {
     startText.textContent = "Who is this?";
     document.onkeyup = function (event) {
@@ -90,14 +90,21 @@ function gameRunning() {
 
         var userInput = event.key;
 
-        if (gameLive === true) {
+        if (guesses.indexOf(userInput) > -1) {
+            startText.textContent = "You already guessed that, try again";
+        }
 
+        if (gameLive === true && guesses.indexOf(userInput) === -1) {
+            startText.textContent = "Who is this?";
             if (wordToGuess.includes(userInput)) {
-                //call correctGuess() to update screen
+
                 console.log("yes");
-                //display(userInput);
+                //display(userInput) on guessed letters element;
                 updateGuessed(userInput);
+
                 correctGuess(userInput);
+
+
             }
 
             else {
@@ -117,29 +124,38 @@ function gameRunning() {
 
 //correct guess function
 function correctGuess(letter) {
+
+    // find all occurrences of userInput in wordToGuess
     var indices = [];
     var idx = wordToGuess.indexOf(letter);
-
-    // find all occurrences of the letter
+    //records index of idx in a new array indices
     while (idx != -1) {
         indices.push(idx);
         idx = wordToGuess.indexOf(letter, idx + 1);
     }
 
-    //get span element by id and update text content to letter
+    //1. for each index position in indices grab the span element [i] and put userInput 
+    //2. update currentGuess array
+
     indices.forEach(function (letterPosition) {
         var newLetter = document.getElementById("span" + letterPosition);
         newLetter.textContent = letter;
+
         currentGuess.splice(letterPosition, 0, letter);
+
+
+
     });
+
 
     console.log(currentGuess);
     var currGuessStr = currentGuess.join("");
+    console.log(currGuessStr);
 
     //record win 
     if (currGuessStr === wordToGuess) {
         wins++;
-        if (wins === 3) {
+        if (wins === 5) {
             win();
         }
         winsElm.textContent = wins;
@@ -164,6 +180,7 @@ function wrongGuess(letter) {
         var playAgain = confirm("Game Over! Try again?");
         if (playAgain == true) {
             deleteSpan();
+            gusses = [];
             guessRem = 10;
             gameRestart();
             wordToGuess = [];
@@ -176,18 +193,21 @@ function wrongGuess(letter) {
 
 //if the guessed letter is not in the guesses array update the array
 function updateGuessed(letter) {
-    if (guesses.includes(letter)) {
-        alert("You already guessed that, try again");
+    //checks if userInput is in the array guesses
+    if (guesses.indexOf(letter) > -1) {
+        startText.textContent = "You already guessed that, try again";
     }
+    //pushes userInput to the guesses array and displays userInput in gussed element
     else {
         guesses.push(letter);
         var guessedElement = document.getElementById("guessed");
         guessedElement.textContent = guesses;
-    }
+    };
 };
 
 function win() {
     deleteSpan();
+    gusses = [];
     guessRem = 10;
     gameRestart();
     alert("you the champ");

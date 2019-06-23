@@ -211,8 +211,8 @@ function win() {
     gusses = [];
     guessRem = 10;
     gameRestart();
-    alert("you the champ");
     wordToGuess = [];
+    alert("you the champ");
 }
 
 

@@ -1,7 +1,7 @@
 # Word-Guess-Game
-## A word guessing game using HTML CSS and JS
+### A word guessing game using HTML CSS and JS
 
-### Instructions: 
+#### Instructions: 
 * Please allow some time before guessing for the GIF to load
 * To start the game press any key
 * Guess the player displayed

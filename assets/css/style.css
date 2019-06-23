@@ -1,6 +1,9 @@
 body{
     background-color: #222222;
 }
+span{
+    padding:5px;
+}
 
 .banner{
   
@@ -32,20 +35,30 @@ width: 100%;
 }
 
 .container{
-    width: 640px;
-    height:640px;
+    width: 680px;
+    height: 680px;
     background-color: #2E2C2E; 
     box-shadow: 30px, #686868;
     margin: 0 auto;
+}
+
+.mainBlock{
+    display: inline-block;
+    width: 680px; 
+    padding: 15px;
+    padding-left: 28px;
 }
 
 .content{
     float: left;
     width:320px;
 }
-.whiteTxt{
+
+.gameText{
     text-align: center;
-    color: #cccccc;
+    color: #cccccc; 
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 1px; 
 }
 
 .currentGuess span{
@@ -56,7 +69,7 @@ width: 100%;
 .scoreBoard{
     float: left;
     background-color:black;
-    color: white;
+    color: #cccccc;
     width: 300px;
     height: 300px;
     border: #B5985A solid;  
@@ -71,8 +84,8 @@ table{
 
 th{
     border: #B5985A solid .2px;
-    width: 75px;  
-    font-size: 12px;
+    width: 100px;  
+    font-size: 16px;
 }
 
 td{  
